@@ -1,0 +1,53 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}
+    Raqam Qo'shish
+{% endblock %}
+{% block header %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Hash Boshqarish</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" aria-current="page" href="/group2group">Guruhdan Guruhga</a>
+        <a class="nav-link active" href="/addnumber/solded">Raqam Qo'shish (sotib olingan)</a>
+      </div>
+      <div class="ms-auto">
+        <a class="btn btn-outline-danger" href="/logout">Chiqish</a>
+      </div>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+{% block body %}
+<div class="container m-auto p-2">
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+        <p class="fs-2 text-start">Kodni kiriting!</p>
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">+</span>
+            <input type="number" class="form-control" value="998777074666" aria-disabled="true" aria-label="Phone number" aria-describedby="basic-addon1" readonly>
+            <button class="btn btn-primary disabled ms-2" type="button">Kod Jo'natildi</button>
+          </div>
+        </div>
+        <form method="POST" action="">
+          <div class="mb-3 d-flex justify-content-between align-items-center">
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon1"><i class="bi bi-key-fill"></i></span>
+              <input type="number" class="form-control" name="verification_code" placeholder="12083" aria-label="Verification code" aria-describedby="basic-addon1">
+            </div>
+            <div class="d-flex">
+              <a class="btn btn-danger mx-1" href="/addnumber/solded">Orqaga</a>
+              <button class="btn btn-primary mx-1" type="submit">Tekshirish</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
