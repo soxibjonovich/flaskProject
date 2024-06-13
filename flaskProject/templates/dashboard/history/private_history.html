@@ -1,0 +1,25 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}
+Joriy va Tamomlangan so'rovlar
+{% endblock %}
+
+{% block body %}
+<div class="container mt-1 text-center">
+    <div class="container text-left mx-auto p-2">
+        <div class="row">
+            <div class="col">
+                <p class="fs-2">Barcha so'rovlar ro'yxati</p>
+            </div>
+        </div>
+    </div>
+    <a href="/history/channel" class="btn btn-outline-primary mb-2">Kanal</a>
+    <a href="/history/group" class="btn btn-outline-primary mb-2">Guruh</a>
+    <a href="/history/private" class="btn btn-primary mb-2">Shaxsiy Yozishmalar</a>
+    <button class="btn btn-outline-primary mb-2" disabled>Botlar</button>
+    <div class="container m-2">
+        <a href="/delete_chats" class="btn btn-warning btn-lg mb-2">Bir tomonlama o'chirish</a>
+        <a href="/delete_chats?force=true" class="btn btn-danger btn-lg mb-2">Ikki tomonlama o'chirish</a>
+    </div>
+</div>
+{% endblock %}
