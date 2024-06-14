@@ -1,0 +1,23 @@
+{% extends 'dashboard/base.html' %} {% block title %} Hash Ochish {% endblock %}
+{% block header_script %}
+	{% if is_wait %}
+        <script src="{{ url_for('static', filename='js/get_code.js') }}" defer></script>
+    {% endif %}
+{% endblock %}
+{% block body %}
+    <div class="mb-3">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %} {% endif %} {% endwith %}
+        <label for="disabledTextInput" class="form-label">Telefon Raqam</label>
+        <input type="text" id="disabledTextInput" class="form-control" placeholder="+{{ hash.phone_number }}" disabled>
+
+        <a href="/" class="btn btn-danger mt-2">Orqaga</a>
+        <a href="{{ url_for('unarchived_handler', user_id=hash.user_id, hash_id=hash.id, getcode=True) }}"
+           class="btn btn-primary mt-2 delayedButton" disabled>Kod Olish</a>
+
+    </div>
+{% endblock %}

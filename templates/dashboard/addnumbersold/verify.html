@@ -1,53 +1,176 @@
-{% extends 'dashboard/base.html' %}
-{% block title %}
-    Raqam Qo'shish
-{% endblock %}
-{% block header %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Hash Boshqarish</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" aria-current="page" href="/group2group">Guruhdan Guruhga</a>
-        <a class="nav-link active" href="/addnumber/solded">Raqam Qo'shish (sotib olingan)</a>
-      </div>
-      <div class="ms-auto">
-        <a class="btn btn-outline-danger" href="/logout">Chiqish</a>
-      </div>
-    </div>
-  </div>
-</nav>
-{% endblock %}
+{% extends 'dashboard/base.html' %} {% block title %} Raqam Qo'shish {% endblock
+%}
 {% block body %}
+
 <div class="container m-auto p-2">
-  <div class="container text-center">
-    <div class="row">
-      <div class="col">
-        <p class="fs-2 text-start">Kodni kiriting!</p>
-        <div class="mb-3">
-          <div class="input-group">
-            <span class="input-group-text" id="basic-addon1">+</span>
-            <input type="number" class="form-control" value="998777074666" aria-disabled="true" aria-label="Phone number" aria-describedby="basic-addon1" readonly>
-            <button class="btn btn-primary disabled ms-2" type="button">Kod Jo'natildi</button>
-          </div>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <p class="fs-2 text-start">Kodni kiriting!</p>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %} {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %} {% endif %} {% endwith %}
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1"
+                        >+</span
+                        >
+                        <input
+                                type="number"
+                                class="form-control"
+                                value="{{ number }}"
+                                aria-disabled="true"
+                                aria-label="Phone number"
+                                aria-describedby="basic-addon1"
+                                readonly
+                        />
+                        <button
+                                class="btn btn-primary disabled ms-2"
+                                type="button"
+                        >
+                            Kod Jo'natildi
+                        </button>
+                    </div>
+                </div>
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <div
+                            class="mb-3 d-flex justify-content-between align-items-center"
+                    >
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"
+                            ><i class="bi bi-key-fill"></i
+                            ></span>
+                            {{ form.code(class="form-control",
+                            placeholder="12083", aria_label="Verification code",
+                            aria_describedby="basic-addon1", required=True,
+                            oninput="formatInput(this);") }}
+                        </div>
+                        <div class="d-flex">
+                            <a
+                                    class="btn btn-danger mx-1"
+                                    href="/addnumber/solded"
+                            >Orqaga</a
+                            >
+                            <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
+                            >
+                                Tekshirish
+                            </button>
+                            <div
+                                    class="modal fade"
+                                    id="exampleModal"
+                                    tabindex="-1"
+                                    aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true"
+                            >
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1
+                                                    class="modal-title fs-5"
+                                                    id="exampleModalLabel"
+                                            >
+                                                2 bosqichli parolni kiriting
+                                                (bo'lsa)
+                                            </h1>
+                                            <button
+                                                    type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close"
+                                            ></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div
+                                                    class="row g-3 align-items-center"
+                                            >
+                                                <div class="col-auto">
+                                                    <label
+                                                            for="inputPassword6"
+                                                            class="col-form-label"
+                                                    >Parol</label
+                                                    >
+                                                </div>
+                                                <div class="col-auto">
+                                                    {{
+                                                    form.two_code(id="inputPassword6",
+                                                    class="form-control",
+                                                    aria_describedby="passwordHelpInline")
+                                                    }}
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button
+                                                            type="button"
+                                                            class="btn btn-secondary"
+                                                            onclick="togglePasswordVisibility()"
+                                                    >
+                                                        <i
+                                                                id="passwordIcon"
+                                                                class="bi bi-eye"
+                                                        ></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <span
+                                                            id="passwordHelpInline"
+                                                            class="form-text"
+                                                    >
+                                                        Telegram hisobingiz
+                                                        xavfsiz bo'lishi uchun
+                                                        qo'yilgan kod
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button
+                                                    type="submit"
+                                                    class="btn btn-primary"
+                                            >
+                                                Kirish
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <form method="POST" action="">
-          <div class="mb-3 d-flex justify-content-between align-items-center">
-            <div class="input-group">
-              <span class="input-group-text" id="basic-addon1"><i class="bi bi-key-fill"></i></span>
-              <input type="number" class="form-control" name="verification_code" placeholder="12083" aria-label="Verification code" aria-describedby="basic-addon1">
-            </div>
-            <div class="d-flex">
-              <a class="btn btn-danger mx-1" href="/addnumber/solded">Orqaga</a>
-              <button class="btn btn-primary mx-1" type="submit">Tekshirish</button>
-            </div>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
 </div>
+<script>
+    function formatInput(input) {
+        let value = input.value.replace(/[^\d]/g, "");
+        let formatted = "";
+        for (let i = 0; i < value.length; i++) {
+            if (i > 0) formatted += "-";
+            formatted += value[i];
+        }
+        input.value = formatted; // Set formatted value
+    }
+</script>
+<script>
+    function togglePasswordVisibility() {
+        var passwordField = document.getElementById("inputPassword6");
+        var passwordIcon = document.getElementById("passwordIcon");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            passwordIcon.classList.remove("bi-eye");
+            passwordIcon.classList.add("bi-eye-slash");
+        } else {
+            passwordField.type = "password";
+            passwordIcon.classList.remove("bi-eye-slash");
+            passwordIcon.classList.add("bi-eye");
+        }
+    }
+</script>
 {% endblock %}

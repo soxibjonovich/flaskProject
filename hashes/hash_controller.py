@@ -71,7 +71,7 @@ class CsvController(object):
         Returns:
             A dictionary where keys are CSV file paths and values are the number of rows in each file.
         """
-        csv_files = self._find_csv_files(".")
+        csv_files = self._find_csv_files(self.root)
         user_csv_files = self._filter_csv_by_id(user_id, csv_files)
         result = {file: self._count_csv_rows(file) for file in user_csv_files}
         return result
@@ -87,6 +87,29 @@ class CsvController(object):
             A list of dictionaries where each dictionary represents a row in the CSV file.
         """
         with open(f"{file}", mode="r", newline="", encoding="utf-8") as csvfile:
-            info = csvfile.readlines()
-            info = [row[:-2] for row in info]
-            return info
+            info = csv.reader(csvfile)
+            a = []
+            for _ in info:
+                a.extend(_)
+            return a
+
+    def add_new_hash(self, hash: str, user_id: int) -> bool:
+        """
+        Adds a new hash to the hashes.csv file.
+        """
+
+        csv_files = self._find_csv_files(self.root)
+        user_csv_files = self._filter_csv_by_id(user_id, csv_files)
+        
+        for file in user_csv_files:
+            row_count = self._count_csv_rows(file)
+            if row_count < 50:
+                with open(file, mode="a", newline="", encoding="utf-8") as csvfile:
+                    csvwriter = csv.writer(csvfile)
+                    csvwriter.writerow([hash])
+                return True
+            
+        new_file_path = os.path.join(self.root, f"username-{user_id}-{len(user_csv_files) + 1}.csv")
+        with open(new_file_path, mode="w", newline="", encoding="utf-8") as csvfile:
+            csvwriter = csv.writer(csvfile)
+            csvwriter.writerow([hash])

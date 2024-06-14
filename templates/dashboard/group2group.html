@@ -1,85 +1,65 @@
 {% extends 'dashboard/base.html' %}
-
-{% block header %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Hash Boshqarish</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/group2group">Guruhdan Guruhga</a>
-        <a class="nav-link" href="/addnumber/solded">Raqam Qo'shish (sotib olingan)</a>
-      </div>
-        <div class="ms-auto">
-            <a class="btn btn-outline-danger" href="/logout">Chiqish</a>
-        </div>
-    </div>
-  </div>
-</nav>
-{% endblock %}
-
-{% block title %}
-Guruhdan guruhga
-{% endblock %}
-
-{% block body %}
-<div class="container text-left mx-auto p-2">
-    <div class="row">
-        <div class="col">
-            <p class="fs-2">Guruhdan Guruhga ko'chirish</p>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                            {% for category, message in messages %}
-                                <div class="alert alert-{{ category }}" role="alert">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-                    {% endif %}
-                {% endwith %}
-            <form method="POST" action="/group2group">
-                <div class="row mb-3">
-                    <div class="col">
-                        <div class="input-group">
+{% block title %} Guruhdan guruhga {% endblock %} {% block body %}
+    <div class="container text-left mx-auto p-2">
+        <div class="row">
+            <div class="col">
+                <p class="fs-2">Guruhdan Guruhga ko'chirish</p>
+                {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %} {% endif %} {% endwith %}
+                <form method="POST" action="/group2group">
+                    <div class="mb-3">
+                        <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">@</span>
-                            <input type="text" class="form-control" name="from_group" placeholder="Guruhdan" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" name="from_group" placeholder="Guruhdan"
+                                   aria-label="Username" aria-describedby="basic-addon1" required/>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="input-group">
+                        <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon2">@</span>
-                            <input type="text" class="form-control" name="to_group" placeholder="Guruhga" aria-label="Username" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control" name="to_group" placeholder="Guruhga"
+                                   aria-label="Username" aria-describedby="basic-addon2" required/>
+                        </div>
+                        <div class="input-group mb-3">
+                                    <span class="input-group-text" onclick="showDatePicker()"><i
+                                            class="bi bi-calendar-fill"></i></span>
+                            <input type="text" class="form-control" id="datepicker1" name="date"
+                                   placeholder="Qachongacha sana" required/>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon2">Buyurtmachi</span>
+                            <input type="text" class="form-control" name="author" placeholder="Ism"
+                                   aria-label="author" aria-describedby="basic-addon2" required/>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="input-group">
-                            <span class="input-group-text" onclick="showDatePicker()"><i class="fas fa-calendar-alt"></i></span>
-                            <input type="text" class="form-control" id="datepicker1" name="date" placeholder="Qachongacha sana">
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Ishga tushirish</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Ishga tushirish</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Подключение необходимых JS файлов -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
-<script>
-    $(document).ready(function(){
-        $('#datepicker1').datepicker({
-            format: 'mm/dd/yyyy'
+    <!-- Подключение необходимых JS файлов -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>
+
+    <script>
+        $(document).ready(function () {
+            $("#datepicker1").datepicker({
+                format: "mm/dd/yyyy",
+            });
         });
-    });
 
-    function showDatePicker() {
-        $('#datepicker1').removeClass('d-none').focus();
-    }
-</script>
+        function showDatePicker() {
+            $("#datepicker1").removeClass("d-none").focus();
+        }
+    </script>
+
 {% endblock %}

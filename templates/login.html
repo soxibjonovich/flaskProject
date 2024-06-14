@@ -21,7 +21,7 @@
     </style>
 {% endblock %}
 {% block body %}
-	<div class="container">
+    <div class="container">
         <section class="vh-100">
           <div class="container-fluid h-custom" style="height: calc(100% - 73px); ">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -41,18 +41,23 @@
                     {% endif %}
                 {% endwith %}
                 <form method="post">
-                  <!-- Email input -->
+                  {{ form.hidden_tag() }}
+                  <!-- Username input -->
                   <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="text" id="form3Example3" name="username" class="form-control form-control-lg"
-                      placeholder="Enter a valid email address" />
+                    {{ form.username(class="form-control form-control-lg", id="form3Example3", placeholder="Enter a valid email address") }}
                     <label class="form-label" for="form3Example3">Email address</label>
                   </div>
 
                   <!-- Password input -->
                   <div data-mdb-input-init class="form-outline mb-3">
-                    <input type="password" id="form3Example4" name="password" class="form-control form-control-lg"
-                      placeholder="Enter password" />
+                    {{ form.password(class="form-control form-control-lg", id="form3Example4", placeholder="Enter password") }}
                     <label class="form-label" for="form3Example4">Password</label>
+                  </div>
+
+                  <!-- Remember Me checkbox -->
+                  <div class="form-check mb-3">
+                    {{ form.remember_me(class="form-check-input", id="rememberMe") }}
+                    <label class="form-check-label" for="rememberMe">Remember Me</label>
                   </div>
 
                   <div class="text-center text-lg-start mt-4 pt-2">

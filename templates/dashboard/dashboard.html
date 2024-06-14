@@ -1,57 +1,46 @@
-{% extends 'dashboard/base.html' %} {% block header %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Hash Boshqarish</a>
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link" aria-current="page" href="/group2group"
-                    >Guruhdan Guruhga</a
-                >
-                <a class="nav-link" href="/addnumber/solded"
-                    >Raqam Qo'shish (sotib olingan)</a
-                >
-            </div>
-            <div class="ms-auto">
-                <a class="btn btn-outline-danger" href="/logout">Chiqish</a>
+{% extends 'dashboard/base.html' %}
+{% block body %}
+    <div class="container mt-1 text-center">
+        <div class="container text-left mx-auto p-2">
+            <div class="row">
+                <div class="col">
+                    <p class="fs-2">Barcha Profillar soni: {{ all_hashes }}</p>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
-{% endblock %} {% block title %}Asosiy Menyu{% endblock %} {% block body %}
-<div class="container">
-    <div class="container text-left mx-auto p-2">
-        <div class="row">
-            <div class="col">
-                <p class="fs-2">Barcha hashlar soni: {{ all_hashes }}</p>
-            </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Profil holati</th>
+                    <th scope="col">Profil tirikligi</th>
+                    <th scope="col">Telegram Id</th>
+                    <th scope="col">Ism</th>
+                    <th scope="col">Telefon raqami</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for hash in user_hashes %}
+                    <tr>
+                        <th scope="row">{{ hash.id }}</th>
+                        <td>{{ hash.work_status|work_status }}</td>
+                        <td>{{ hash.hash_status|hash_status }}</td>
+                        <td>{{ hash.telegram_id }}</td>
+                        <td>{{ hash.name }}</td>
+                        <td>{{ hash.phone_number }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm"
+                               href="/{{ hash.user_id }}/{{ hash.id }}/unarchive">ochish</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
+        <a href="/?page={{ current_page + 1 }}" class="btn btn-primary">Yana ochish</a>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">fayl nomi</th>
-                <th scope="col">Hashlar soni</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for filename in user_hashes %}
-            <tr>
-                <th scope="row">{{ filename.split("/")[-1] }}</th>
-                <td>{{ user_hashes[filename] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+
 {% endblock %}
+{% block title %}Asosiy Menyu{% endblock %}
